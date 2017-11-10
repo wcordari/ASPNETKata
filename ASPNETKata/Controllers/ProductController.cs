@@ -15,7 +15,7 @@ namespace ASPNETKata.Controllers
         // GET: Product
         public ActionResult Index()
         {
-            var connString = ""; // Insert Connection String
+            var connString = "Server = localhost; Database = adventureworks; Uid = root; Pwd = huffmanhigh1;";
             using (var conn = new MySqlConnection(connString))
             {
                 var list = conn.Query<Product>("SELECT * FROM product ORDER BY ProductId DESC");
@@ -39,6 +39,7 @@ namespace ASPNETKata.Controllers
         [HttpPost]
         public ActionResult Create(FormCollection collection)
         {
+            var connString = "Server = localhost; Database = adventureworks; Uid = root; Pwd = huffmanhigh1;";
             using (var conn = new MySqlConnection(connString))
             {
                 conn.Execute("INSERT INTO product (Name) VALUES (@Name)", new { Name = collection["Name"] });
@@ -56,6 +57,7 @@ namespace ASPNETKata.Controllers
         [HttpPost]
         public ActionResult Edit(int id, FormCollection collection)
         {
+            var connString = "Server = localhost; Database = adventureworks; Uid = root; Pwd = huffmanhigh1;";
             using (var conn = new MySqlConnection(connString))
             {
                 conn.Execute("UPDATE product SET Name = @Name WHERE ProductId = @Id", new { Id = id, Name = collection["Name"] });
@@ -73,6 +75,7 @@ namespace ASPNETKata.Controllers
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)
         {
+            var connString = "Server = localhost; Database = adventureworks; Uid = root; Pwd = huffmanhigh1;";
             using (var conn = new MySqlConnection(connString))
             {
                 conn.Execute("Delete product SET Name = @Name WHERE ProductId = @Id", new { Id = id, Name = collection["Name"] });
