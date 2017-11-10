@@ -73,15 +73,10 @@ namespace ASPNETKata.Controllers
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)
         {
-            try
+            using (var conn = new MySqlConnection(connString))
             {
-                // TODO: Add delete logic here
-
+                conn.Execute("Delete product SET Name = @Name WHERE ProductId = @Id", new { Id = id, Name = collection["Name"] });
                 return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
             }
         }
     }
