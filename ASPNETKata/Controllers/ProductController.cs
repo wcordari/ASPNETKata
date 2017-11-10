@@ -56,15 +56,10 @@ namespace ASPNETKata.Controllers
         [HttpPost]
         public ActionResult Edit(int id, FormCollection collection)
         {
-            try
+            using (var conn = new MySqlConnection(connString))
             {
-                // TODO: Add update logic here
-
+                conn.Execute("UPDATE product SET Name = @Name WHERE ProductId = @Id", new { Id = id, Name = collection["Name"] });
                 return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
             }
         }
 
