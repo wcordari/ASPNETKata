@@ -18,7 +18,7 @@ namespace ASPNETKata.Controllers
             var connString = ""; // Insert Connection String
             using (var conn = new MySqlConnection(connString))
             {
-                var list = conn.Query<Product>("SELECT * FROM product");
+                var list = conn.Query<Product>("SELECT * FROM product ORDER BY ProductId DESC");
                 return View(list);
             }
         }
@@ -39,15 +39,10 @@ namespace ASPNETKata.Controllers
         [HttpPost]
         public ActionResult Create(FormCollection collection)
         {
-            try
+            using (var conn = new MySqlConnection(connString))
             {
-                // TODO: Add insert logic here
-
+                conn.Execute("INSERT INTO product (Name) VALUES (@Name)", new { Name = collection["Name"] });
                 return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
             }
         }
 
